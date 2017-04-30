@@ -1,0 +1,310 @@
+<!doctype html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+	<head>
+        <meta charset="utf-8"/>
+	    <title>ui.cpp</title>
+	    <link href="../../third-party/google-code-prettify/prettify-CppCoverage.css" type="text/css" rel="stylesheet" />
+	    <script type="text/javascript" src="../../third-party/google-code-prettify/prettify.js"></script>
+	</head>
+	<body onload="prettyPrint()">
+        <h4></h4>
+		<pre class="prettyprint lang-cpp linenums">
+#include "UI.h"
+#include &lt;string&gt;
+#include &lt;iostream&gt;
+
+using namespace std;
+
+void UI::printMenu()
+<span style = "background-color:#fdd">{
+	cout &lt;&lt; endl;
+	cout &lt;&lt; "1 - Administrator mode" &lt;&lt; endl;
+	cout &lt;&lt; "2 - User mode" &lt;&lt; endl;
+	cout &lt;&lt; "0 - Exit." &lt;&lt; endl;
+}</span>
+
+void UI::printRepositoryMenu()
+<span style = "background-color:#fdd">{
+	cout &lt;&lt; "Possible commands: " &lt;&lt; endl;
+	cout &lt;&lt; "\t 1 - Add Tshirt." &lt;&lt; endl;
+	cout &lt;&lt; "\t 2 - Delete Tshirt" &lt;&lt; endl;
+	cout &lt;&lt; "\t 3 - Update Tshirt" &lt;&lt; endl;
+	cout &lt;&lt; "\t 4 - Show all Tshirt" &lt;&lt; endl;
+	cout &lt;&lt; "\t 5 - Show Tshirt under a given length" &lt;&lt; endl;
+	cout &lt;&lt; "\t 0 - Exit" &lt;&lt; endl;
+}</span>
+
+<span style = "background-color:#fdd">void UI::printUserMenu() {
+	cout &lt;&lt; "Possible commands: " &lt;&lt; endl;
+	cout &lt;&lt; "\t 1 - View Tshirts by size " &lt;&lt; endl;
+	cout &lt;&lt; "\t 2 - View Shopping basket and total sum " &lt;&lt; endl;
+	cout &lt;&lt; "\t 0 - Exit" &lt;&lt; endl;
+}</span>
+
+void UI::printPlayListMenu()
+<span style = "background-color:#fdd">{
+	cout &lt;&lt; "Possible commands: " &lt;&lt; endl;
+	cout &lt;&lt; "\t 1 - Buy a tshirt " &lt;&lt; endl;
+	cout &lt;&lt; "\t 2 - Next " &lt;&lt; endl;
+	cout &lt;&lt; "\t 0 - Exit" &lt;&lt; endl;
+}</span>
+
+<span style = "background-color:#fdd">bool UI::deleteTshirtUI() {
+	cout &lt;&lt; "Enter the link to the photo";
+	std::string link;
+	cin &gt;&gt; link;
+	cin.ignore();
+	return this-&gt;ctrl.deleteTshirt(link);
+}</span>
+bool UI::addTshirtUI()
+<span style = "background-color:#fdd">{
+	cout &lt;&lt; "Enter the Tshirt size: ";
+	std::string size;
+	cin &gt;&gt; size;
+	cin.ignore();
+	cout &lt;&lt; "Enter the color: ";
+	std::string color;
+	cin &gt;&gt; color;
+	cin.ignore();
+	cout &lt;&lt; "Enter the price: ";</span>
+	double price;
+<span style = "background-color:#fdd">	cin &gt;&gt; price;
+	cout &lt;&lt; "Enter the quantity: ";</span>
+	int quantity;
+<span style = "background-color:#fdd">	cin &gt;&gt; quantity;
+	cin.ignore();
+	cout &lt;&lt; "Enter the length: ";</span>
+	int length;
+<span style = "background-color:#fdd">	cin &gt;&gt; length;
+	cin.ignore();
+	cout &lt;&lt; "Photo link:";
+	std::string link;
+	getline(cin, link);</span>
+
+<span style = "background-color:#fdd">	return this-&gt;ctrl.addTshirt(size, color, price, quantity, link,length);
+}</span>
+
+bool UI::updateTshirtUI()
+<span style = "background-color:#fdd">{
+	cout &lt;&lt; "Enter the new Tshirt size: ";
+	std::string size;
+	cin &gt;&gt; size;
+	cin.ignore();
+	cout &lt;&lt; "Enter the new color: ";
+	std::string color;
+	cin &gt;&gt; color;
+	cin.ignore();
+	cout &lt;&lt; "Enter the new price: ";</span>
+	double price;
+<span style = "background-color:#fdd">	cin &gt;&gt; price;
+	cout &lt;&lt; "Enter the new quantity: ";</span>
+	int quantity;
+<span style = "background-color:#fdd">	cin &gt;&gt; quantity;
+	cin.ignore();
+	cout &lt;&lt; "Enter the new length: ";</span>
+	int length;
+<span style = "background-color:#fdd">	cin &gt;&gt; length;
+	cin.ignore();
+	cout &lt;&lt; "Enter the photo link:";
+	std::string link;
+	getline(cin, link);</span>
+
+<span style = "background-color:#fdd">	return this-&gt;ctrl.updateTshirt(size, color, price, quantity, link,length);
+}</span>
+
+void UI::displayAllTshirtsUI()
+<span style = "background-color:#fdd">{
+	std::vector&lt;Tshirt&gt; v = this-&gt;ctrl.getRepo().getTshirts();
+	if (v.size() == 0) {
+		cout &lt;&lt; "There are no TShirt in the repository" &lt;&lt; endl;
+		return;</span>
+	}
+	/*for (int i = 0; i &lt; v.size(); i++) {
+		Tshirt t = v[i];
+		cout &lt;&lt; "Tshirt: " &lt;&lt; t.getSize() &lt;&lt; ";" &lt;&lt; t.getColor() &lt;&lt; "; Quantity: " &lt;&lt; t.getQuantity() &lt;&lt; "; Price:" &lt;&lt; t.getPrice() &lt;&lt; endl;
+	}*/
+
+<span style = "background-color:#fdd">	for (auto t : v) {
+		cout &lt;&lt; "Tshirt: " &lt;&lt; t.getSize() &lt;&lt; ";" &lt;&lt; t.getColor() &lt;&lt; "; Quantity: " &lt;&lt; t.getQuantity() &lt;&lt; "; Price:" &lt;&lt; t.getPrice() &lt;&lt; endl;
+	}
+}</span>
+
+void UI::displayTshirtsByLengthUI()
+<span style = "background-color:#fdd">{</span>
+	int length;
+<span style = "background-color:#fdd">	cout &lt;&lt; "Enter the length";
+	cin &gt;&gt; length;
+	std::vector&lt;Tshirt&gt; v = this-&gt;ctrl.filterByLength(length);</span>
+	/*for (int i = 0; i &lt; v.size(); i++) {
+		Tshirt t = v[i];
+		cout &lt;&lt; t.toString() &lt;&lt; endl;
+	}*/
+
+<span style = "background-color:#fdd">	for (auto t : v) {
+		cout &lt;&lt; t.toString() &lt;&lt; endl;
+	}
+}</span>
+
+void UI::seeShoppingBasketUI()
+<span style = "background-color:#fdd">{
+	double total = this-&gt;ctrl.getShoppingBascket().getTotalSum();
+	std::vector&lt;Tshirt&gt; v = this-&gt;ctrl.getShoppingBascket().getTshirts();
+	cout &lt;&lt; "Total price to be paid: " &lt;&lt; total &lt;&lt; endl;</span>
+	/*for (int i = 0; i &lt; v.size(); i++)
+	{
+		Tshirt t = v[i];
+		cout &lt;&lt; t.toString() &lt;&lt; endl;
+	}
+*/
+<span style = "background-color:#fdd">	for (auto t : v) {
+		cout &lt;&lt; t.toString() &lt;&lt; endl;
+	}</span>
+
+<span style = "background-color:#fdd">}</span>
+
+<span style = "background-color:#fdd">void UI::seeTshirtBySizeUI() {
+	string size;
+	cout &lt;&lt; "Enter size :";
+	getline(cin, size);
+	if (!this-&gt;ctrl.createTshirtList(size)) {
+		cout &lt;&lt; "There are no tshirts with such size\n";
+		return;</span>
+	}
+<span style = "background-color:#fdd">	this-&gt;ctrl.startTshirtList();
+	Tshirt&amp; tshirt = this-&gt;ctrl.displayCurrent();
+	cout &lt;&lt; tshirt.toString() &lt;&lt; endl;
+	while (true) {
+		cout &lt;&lt; "Currently: \n";
+		printPlayListMenu();
+		int cmdPlayList{ 0 };
+		cout &lt;&lt; "Enter the command";
+		cin &gt;&gt; cmdPlayList;
+		cin.ignore();</span>
+
+<span style = "background-color:#fdd">		if (cmdPlayList == 0) {
+			return;</span>
+		}
+<span style = "background-color:#fdd">		switch (cmdPlayList)</span>
+		{
+		case 1: {
+<span style = "background-color:#fdd">			Tshirt&amp; tshirt = this-&gt;ctrl.getCurrentTshirt();
+			int newQuantity = tshirt.getQuantity() - 1;
+			if (newQuantity &lt; 0){
+				cout &lt;&lt; "Sold out";
+				break;</span>
+			}
+<span style = "background-color:#fdd">			tshirt.setQuantity(newQuantity);
+			this-&gt;ctrl.buyTshirt(tshirt);
+			double sum = this-&gt;ctrl.getShoppingBascket().getTotalSum();
+			cout &lt;&lt; "Total amount to be paid: " &lt;&lt; sum &lt;&lt; endl;
+			break;</span>
+		}
+		case 2:
+<span style = "background-color:#fdd">			Tshirt&amp; tshirt = this-&gt;ctrl.displayNext();
+			cout &lt;&lt; tshirt.toString() &lt;&lt; endl;</span>
+			break;
+		}
+		
+<span style = "background-color:#fdd">	}
+}</span>
+void UI::run()
+<span style = "background-color:#fdd">{
+	while (true)</span>
+	{
+<span style = "background-color:#fdd">		UI::printMenu();
+		bool flag = false;
+		int command{ 0 };
+		cout &lt;&lt; "Input the command: ";
+		cin &gt;&gt; command;
+		cin.ignore();
+		if (command == 0)
+			break;</span>
+
+		// repository management
+<span style = "background-color:#fdd">		if (command == 1)</span>
+		{
+<span style = "background-color:#fdd">			while (true)</span>
+			{
+<span style = "background-color:#fdd">				UI::printRepositoryMenu();
+				int commandRepo{ 0 };
+				cout &lt;&lt; "Input the command: ";
+				cin &gt;&gt; commandRepo;
+				cin.ignore();
+				if (commandRepo == 0)
+					break;
+				switch (commandRepo)</span>
+				{
+				case 1:
+<span style = "background-color:#fdd">					flag = this-&gt;addTshirtUI();
+					if (flag) {
+						cout &lt;&lt; "Tshirt added" &lt;&lt; endl;</span>
+					}
+<span style = "background-color:#fdd">					else {
+						cout &lt;&lt; "Tshirt already in the repository" &lt;&lt; endl;</span>
+					}
+<span style = "background-color:#fdd">					break;</span>
+				case 2:
+<span style = "background-color:#fdd">					flag = this-&gt;deleteTshirtUI();
+					if (flag) {
+						cout &lt;&lt; "Tshirt deleted" &lt;&lt; endl;</span>
+					}
+<span style = "background-color:#fdd">					else {
+						cout &lt;&lt; "Tshirt not in the list or quantity is not 0" &lt;&lt; endl;</span>
+					}
+<span style = "background-color:#fdd">					break;</span>
+				case 3:
+<span style = "background-color:#fdd">					flag = this-&gt;updateTshirtUI();
+					if (flag) {
+						cout &lt;&lt; "Tshirt was updated" &lt;&lt; endl;</span>
+					}
+<span style = "background-color:#fdd">					else {
+						cout &lt;&lt; "Tshirt was not updated" &lt;&lt; endl;</span>
+					}
+<span style = "background-color:#fdd">					break;</span>
+				case 4:
+<span style = "background-color:#fdd">					this-&gt;displayAllTshirtsUI();
+					break;</span>
+				case 5:
+				{
+<span style = "background-color:#fdd">					this-&gt;displayTshirtsByLengthUI();</span>
+					break;
+				}
+				}
+		
+
+<span style = "background-color:#fdd">			}</span>
+		}
+
+		// user management
+<span style = "background-color:#fdd">		if (command == 2){
+			while (true)</span>
+			{
+<span style = "background-color:#fdd">				UI::printUserMenu();
+				int cmdUsr{ 0 };
+				cout &lt;&lt; "Input the command: ";
+				cin &gt;&gt; cmdUsr;
+				cin.ignore();
+				if (cmdUsr == 0)
+					break;
+				switch (cmdUsr)</span>
+				{
+				case 1:
+				{
+<span style = "background-color:#fdd">					this-&gt;seeTshirtBySizeUI();
+					break;</span>
+				}
+				case 2:
+				{
+<span style = "background-color:#fdd">					this-&gt;seeShoppingBasketUI();</span>
+				}
+					
+				default:
+					break;
+				}
+<span style = "background-color:#fdd">			}</span>
+
+		}
+<span style = "background-color:#fdd">	}
+}</span></pre>
+	</body>
+</html>

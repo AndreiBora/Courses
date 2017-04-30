@@ -1,0 +1,114 @@
+<!doctype html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+	<head>
+        <meta charset="utf-8"/>
+	    <title>controller.cpp</title>
+	    <link href="../../third-party/google-code-prettify/prettify-CppCoverage.css" type="text/css" rel="stylesheet" />
+	    <script type="text/javascript" src="../../third-party/google-code-prettify/prettify.js"></script>
+	</head>
+	<body onload="prettyPrint()">
+        <h4></h4>
+		<pre class="prettyprint lang-cpp linenums">
+#include "Controller.h"
+#include "TshirtList.h"
+#include &lt;algorithm&gt;
+#include &lt;iterator&gt;
+
+bool Controller::addTshirt(const std::string &amp; size, const std::string &amp; color, double price, int quantity, const std::string &amp; link,int length)
+<span style = "background-color:#dfd">{
+	Tshirt t{ size ,color ,price ,quantity,link,length};
+	if (this-&gt;getRepo().find(t) != -1)
+		return false;
+	this-&gt;repo.add(t);
+	return true;
+}</span>
+
+bool Controller::deleteTshirt(const std::string &amp; link)
+<span style = "background-color:#dfd">{
+	Tshirt t{ "","",0,0,link,0};
+	Tshirt found;
+	int pos = this-&gt;getRepo().find(t);
+	if (pos != -1 ) {
+		found = this-&gt;getRepo().getElementAtPos(pos);</span>
+		//we can delete the Tshirt only if there is no quantity in stock
+<span style = "background-color:#dfd">		if (found.getQuantity() == 0) {
+			this-&gt;repo.remove(pos);
+			return true;</span>
+		}
+	}
+<span style = "background-color:#dfd">	return false;
+}</span>
+
+bool Controller::updateTshirt(const std::string &amp; size, const std::string &amp; color, double price, int quantity, const std::string &amp; link,int length)
+<span style = "background-color:#dfd">{
+	Tshirt t{ size ,color ,price ,quantity,link,length };
+	if (this-&gt;repo.find(t) == -1) {
+		return false;</span>
+	}
+<span style = "background-color:#dfd">	this-&gt;repo.update(t);
+	return true;
+}</span>
+
+
+<span style = "background-color:#dfd">bool Controller::createTshirtList(std::string size) {
+	this-&gt;tshirtList.clear();
+	std::vector&lt;Tshirt&gt; all = this-&gt;getRepo().getTshirts();
+	for (int i = 0; i &lt; all.size(); i++) {
+		if (size == "" || all[i].getSize() == size) {
+			this-&gt;tshirtList.add(all[i]);</span>
+		}
+<span style = "background-color:#dfd">	}
+	if (this-&gt;tshirtList.getSize() == 0) {
+		return false;</span>
+	}
+<span style = "background-color:#dfd">	return true;
+}</span>
+
+bool Controller::startTshirtList()
+<span style = "background-color:#dfd">{
+	return this-&gt;tshirtList.start();
+}</span>
+
+Tshirt &amp; Controller::displayCurrent()
+<span style = "background-color:#dfd">{
+	this-&gt;tshirtList.display();
+	return this-&gt;tshirtList.getCurrent();
+}</span>
+
+Tshirt &amp; Controller::displayNext()
+<span style = "background-color:#dfd">{
+	this-&gt;tshirtList.displayNext();
+	return this-&gt;tshirtList.getCurrent();
+}</span>
+
+
+Tshirt &amp; Controller::getCurrentTshirt()
+<span style = "background-color:#dfd">{
+	return this-&gt;tshirtList.getCurrent();
+}</span>
+
+void Controller::buyTshirt(const Tshirt &amp; tshirt)
+<span style = "background-color:#dfd">{
+	this-&gt;shoppingBasket.add(tshirt);
+	double price = tshirt.getPrice();
+	this-&gt;shoppingBasket.totalSum += price;
+}</span>
+
+std::vector&lt;Tshirt&gt; Controller::filterByLength(int length)
+<span style = "background-color:#dfd">{
+	std::vector&lt;Tshirt&gt; all1 = this-&gt;getRepo().getTshirts();
+	std::vector&lt;Tshirt&gt; filter;
+	auto isLess = [length](Tshirt t) {return t &lt; length; };</span>
+
+<span style = "background-color:#dfd">	copy_if(all1.begin(), all1.end(), back_inserter(filter), isLess);</span>
+	/*for (int i = 0; i &lt; all1.size(); i++)
+	{
+		if (all1[i] &lt; length) {
+			filter.push_back(all1[i]);
+		}
+	}*/
+<span style = "background-color:#dfd">	return filter;
+}</span>
+</pre>
+	</body>
+</html>

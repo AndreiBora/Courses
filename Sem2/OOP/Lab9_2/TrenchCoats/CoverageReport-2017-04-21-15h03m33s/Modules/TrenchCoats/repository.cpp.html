@@ -1,0 +1,50 @@
+<!doctype html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+	<head>
+        <meta charset="utf-8"/>
+	    <title>repository.cpp</title>
+	    <link href="../../third-party/google-code-prettify/prettify-CppCoverage.css" type="text/css" rel="stylesheet" />
+	    <script type="text/javascript" src="../../third-party/google-code-prettify/prettify.js"></script>
+	</head>
+	<body onload="prettyPrint()">
+        <h4></h4>
+		<pre class="prettyprint lang-cpp linenums">
+#include "Repository.h"
+#include &lt;string&gt;
+using namespace std;
+
+<span style = "background-color:#dfd">void Repository::add(const Tshirt&amp; t) {
+	this-&gt;Tshirts.push_back(t);
+}</span>
+
+<span style = "background-color:#dfd">void Repository::remove(int pos) {
+	this-&gt;Tshirts.erase(this-&gt;Tshirts.begin()+pos);
+}</span>
+
+void Repository::update(const Tshirt &amp; t)
+<span style = "background-color:#dfd">{
+	for (int i = 0; i &lt; this-&gt;getTshirts().size(); i++) {
+		if (this-&gt;getElementAtPos(i) == t)
+			this-&gt;Tshirts[i] = t;
+	}
+}</span>
+int Repository::find(const Tshirt &amp; s)
+<span style = "background-color:#dfd">{
+	std::vector&lt;Tshirt&gt; v = this-&gt;getTshirts();
+		if (v.size() == 0)
+			return 0;
+		for (int i = 0; i &lt; v.size(); i++) {
+			if (s == v[i])
+				return i;
+		}</span>
+	
+<span style = "background-color:#dfd">	return -1;
+}</span>
+
+Tshirt  Repository::getElementAtPos(int pos)
+<span style = "background-color:#dfd">{	
+	std::vector&lt;Tshirt&gt; v = this-&gt;getTshirts();
+	return v[pos];
+}</span></pre>
+	</body>
+</html>

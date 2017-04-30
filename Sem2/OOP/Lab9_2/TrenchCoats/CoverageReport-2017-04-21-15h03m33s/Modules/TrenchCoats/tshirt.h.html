@@ -1,0 +1,50 @@
+<!doctype html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+	<head>
+        <meta charset="utf-8"/>
+	    <title>tshirt.h</title>
+	    <link href="../../third-party/google-code-prettify/prettify-CppCoverage.css" type="text/css" rel="stylesheet" />
+	    <script type="text/javascript" src="../../third-party/google-code-prettify/prettify.js"></script>
+	</head>
+	<body onload="prettyPrint()">
+        <h4></h4>
+		<pre class="prettyprint lang-cpp linenums">
+#pragma once
+#include &lt;iostream&gt;
+#include &lt;string&gt;
+
+class Tshirt
+{
+private:
+	std::string size;
+	std::string color;
+	double price;
+	int quantity;
+	std::string link;
+	int length;
+
+public:
+	Tshirt();
+	Tshirt(const std::string&amp; size, const std::string&amp; color, double price, int quantity, const std::string&amp; link,int length);
+<span style = "background-color:#dfd">	std::string getSize() const { return size; }
+	std::string getColor() const { return color; }
+	double getPrice() const { return price; }
+	int getQuantity() const { return quantity; }
+	std::string getLink() const { return link; }</span>
+	int getLength()const { return length; }
+
+	void setSize(std::string s) { size = s; }
+	void setColor(std::string c) { color = c; }
+	void setPrice(double p) { price = p; }
+<span style = "background-color:#dfd">	void setQuantity(int q) { quantity = q; }</span>
+	void setLink(std::string lk) { link = lk; }
+	void display();
+	std::string toString();
+	bool operator&lt;(int length) const;
+};
+
+<span style = "background-color:#dfd">inline bool operator == (const Tshirt &amp;x, const Tshirt &amp;y) {
+	return x.getLink() == y.getLink();
+}</span></pre>
+	</body>
+</html>

@@ -1,0 +1,174 @@
+<!doctype html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+	<head>
+        <meta charset="utf-8"/>
+	    <title>tester.cpp</title>
+	    <link href="../../third-party/google-code-prettify/prettify-CppCoverage.css" type="text/css" rel="stylesheet" />
+	    <script type="text/javascript" src="../../third-party/google-code-prettify/prettify.js"></script>
+	</head>
+	<body onload="prettyPrint()">
+        <h4></h4>
+		<pre class="prettyprint lang-cpp linenums">
+#include "tester.h"
+#include &lt;cassert&gt;
+#include "repository.h"
+#include "controller.h"
+#include &lt;iostream&gt;
+
+Tester::Tester()
+<span style = "background-color:#dfd">{
+	testdynamicvector();
+	testrepo();
+	testcontroller();
+	testShoppingBasket();
+	testTshirt();
+	testTshirtList();
+	testController2();
+}</span>
+
+
+void Tester::testdynamicvector()
+<span style = "background-color:#dfd">{
+	std::vector&lt;Tshirt&gt; v;
+	Tshirt t1{ "s","blue",129,0,"https://www.originals.ro/tricou-barbati-adidas-performance-ultra-boost-bk2799-p-16597.html",71 };
+	Tshirt t2{ "m","white",117,20,"https://www.originals.ro/tricou-barbati-adidas-performance-intnl-taste-bk2832-p-16599.html",60 };
+	v.push_back(t1);
+	assert(v.size() == 1);
+	v.push_back(t2);
+	assert(v.size() == 2);
+	v.erase(v.begin());
+	assert(v.size() == 1);</span>
+
+<span style = "background-color:#dfd">}</span>
+
+void Tester::testrepo()
+<span style = "background-color:#dfd">{
+	Repository repo{};
+	Tshirt t1{ "s","blue",129,0,"https://www.originals.ro/tricou-barbati-adidas-performance-ultra-boost-bk2799-p-16597.html",71 };
+	Tshirt t2{ "m","white",117,20,"https://www.originals.ro/tricou-barbati-adidas-performance-intnl-taste-bk2832-p-16599.html",60 };
+	repo.add(t1);
+	assert(repo.getTshirts().size() == 1);
+	repo.add(t2);
+	assert(repo.getTshirts().size() == 2);
+	repo.remove(0);
+	assert(repo.getTshirts().size() == 1);
+	assert(repo.find(t2) == 0);
+	Tshirt t3{ "m","black",117,20,"https://www.originals.ro/tricou-barbati-adidas-performance-intnl-taste-bk2832-p-16599.html",60 };
+	repo.update(t3);</span>
+
+	//test find with empty repo
+<span style = "background-color:#dfd">	Repository repo2{};
+	assert(repo2.find(t3)==0);
+}</span>
+
+void Tester::testcontroller()
+<span style = "background-color:#dfd">{
+	Repository repo{};
+	Tshirt t1{ "s","blue",129,0,"https://www.originals.ro/tricou-barbati-adidas-performance-ultra-boost-bk2799-p-16597.html",71 };
+	Tshirt t2{ "m","white",117,20,"https://www.originals.ro/tricou-barbati-adidas-performance-intnl-taste-bk2832-p-16599.html",60 };
+	Tshirt t3{ "L","black",112,30,"https://www.originals.ro/tricou-barbati-adidas-performance-intnl-taste-bk2832-p-16500.html",70 };
+	repo.add(t1);
+	repo.add(t2);
+	Controller ctrl{repo};
+	ctrl.getShoppingBascket();</span>
+	//try to add a tshirt twice
+<span style = "background-color:#dfd">	bool result = ctrl.addTshirt("s", "blue", 129, 0, "https://www.originals.ro/tricou-barbati-adidas-performance-ultra-boost-bk2799-p-16597.html",71);
+	assert(result ==  false);</span>
+	//delete a tshirt that exist
+<span style = "background-color:#dfd">	result = ctrl.deleteTshirt("https://www.originals.ro/tricou-barbati-adidas-performance-ultra-boost-bk2799-p-16597.html");</span>
+	
+<span style = "background-color:#dfd">	assert(result == true);</span>
+	//delete a tshirt that doesn't exist;
+<span style = "background-color:#dfd">	result = ctrl.deleteTshirt("nu exista");
+	assert(result == false);</span>
+	
+	//add a Tshirt through controller
+<span style = "background-color:#dfd">	result = ctrl.addTshirt("L","black",112,30,"https://www.originals.ro/tricou-barbati-adidas-performance-intnl-taste-bk2832-p-16500.html",70);
+	assert(result == true);</span>
+	//update a tshirt that doesn't exist
+<span style = "background-color:#dfd">	result = ctrl.updateTshirt("L", "black", 112, 30, "https://www.nuexista.ro",60);
+	assert(result == false);</span>
+	//update a tshirt that exists
+<span style = "background-color:#dfd">	result = ctrl.updateTshirt("XL", "black", 112, 30, "https://www.originals.ro/tricou-barbati-adidas-performance-intnl-taste-bk2832-p-16500.html", 70);
+	assert(result == true);</span>
+
+<span style = "background-color:#dfd">	result = ctrl.createTshirtList("XL");
+	assert(result == true);</span>
+
+
+<span style = "background-color:#dfd">	Repository repo2{};
+	Controller ctrl2{ repo2 };
+	result = ctrl2.createTshirtList("XL");
+	assert(result == false);
+	result = ctrl2.startTshirtList();
+	assert(result == false);
+}</span>
+
+<span style = "background-color:#dfd">void Tester::testShoppingBasket() {
+	ShoppingBasket sb{1};
+	assert(sb.getTotalSum() == 1);
+}</span>
+
+void Tester::testTshirt()
+<span style = "background-color:#dfd">{
+	Tshirt t1{ "M","white",117,20,"https://www.originals.ro/tricou-barbati-adidas-performance-intnl-taste-bk2832-p-16599.html",60 };
+	Tshirt t2{ "L","black",112,30,"https://www.originals.ro/tricou-barbati-adidas-performance-intnl-taste-bk2832-p-16599.html",70 };
+	assert(t1.getSize() == "M");
+	assert(t1.getColor() == "white");
+	assert(t1.getPrice() == 117);
+	t1.setQuantity(10);
+	assert(t1.getQuantity() == 10);
+	assert("Tshirt\ncolor:white\nsize: M\nprice: 117\n" == t1.toString());
+	t1.display();
+	assert(t1 &lt; 70);
+}</span>
+
+void Tester::testTshirtList()
+<span style = "background-color:#dfd">{
+	TshirtList tl;
+	Tshirt t1{ "M","white",117,20,"https://www.originals.ro/tricou-barbati-adidas-performance-intnl-taste-bk2832-p-16599.html",60 };
+	bool result = tl.start();
+	assert(result == false);
+	tl.display();
+	tl.displayNext();</span>
+	//add an element
+<span style = "background-color:#dfd">	tl.add(t1);</span>
+	//test get size
+<span style = "background-color:#dfd">	assert(tl.getSize() == 1);</span>
+	//test start
+<span style = "background-color:#dfd">	result = tl.start();
+	assert(result == true);
+	tl.display();
+	tl.displayNext();</span>
+	//get current
+<span style = "background-color:#dfd">	Tshirt&amp; t = tl.getCurrent();
+	tl.clear();</span>
+
+<span style = "background-color:#dfd">}</span>
+
+void Tester::testController2()
+<span style = "background-color:#dfd">{
+	Tshirt t1{ "S","blue",129,0,"https://www.originals.ro/tricou-barbati-adidas-performance-ultra-boost-bk2799-p-16597.html",71 };
+	Tshirt t2{ "S","white",117,20,"https://www.originals.ro/tricou-barbati-adidas-performance-intnl-taste-bk2832-p-16599.html",60 };
+	Repository repo{};
+	repo.add(t1);
+	repo.add(t2);
+	Controller ctrl{repo};
+	ctrl.createTshirtList("S");
+	Tshirt&amp; t19 = ctrl.getCurrentTshirt();
+	assert(t19.getLink() == t1.getLink());
+	Tshirt&amp; t3 = ctrl.displayCurrent();
+	assert(t3.getLink() == t1.getLink());</span>
+	
+<span style = "background-color:#dfd">	Tshirt&amp; t4 = ctrl.displayNext();
+	assert(t4.getLink() == t2.getLink());</span>
+
+<span style = "background-color:#dfd">	ctrl.buyTshirt(t1);</span>
+	//filter 
+<span style = "background-color:#dfd">	std::vector&lt;Tshirt&gt;v = ctrl.filterByLength(100);
+	assert(v[0].getLink() == t1.getLink());
+	assert(v[1].getLink() == t2.getLink());</span>
+	
+<span style = "background-color:#dfd">}</span></pre>
+	</body>
+</html>

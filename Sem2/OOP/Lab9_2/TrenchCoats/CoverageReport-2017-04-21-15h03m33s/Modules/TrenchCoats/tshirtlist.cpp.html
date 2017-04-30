@@ -1,0 +1,68 @@
+<!doctype html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+	<head>
+        <meta charset="utf-8"/>
+	    <title>tshirtlist.cpp</title>
+	    <link href="../../third-party/google-code-prettify/prettify-CppCoverage.css" type="text/css" rel="stylesheet" />
+	    <script type="text/javascript" src="../../third-party/google-code-prettify/prettify.js"></script>
+	</head>
+	<body onload="prettyPrint()">
+        <h4></h4>
+		<pre class="prettyprint lang-cpp linenums">
+#include "TshirtList.h"
+
+
+void TshirtList::add(const Tshirt &amp; tshirt)
+<span style = "background-color:#dfd">{
+	this-&gt;tshirts.push_back(tshirt);
+}</span>
+
+int TshirtList::getSize()
+<span style = "background-color:#dfd">{
+	return this-&gt;tshirts.size();
+}</span>
+
+bool TshirtList::start()
+<span style = "background-color:#dfd">{
+	if (this-&gt;tshirts.size() == 0) {
+		return false;</span>
+	}
+<span style = "background-color:#dfd">	this-&gt;current = 0;
+	return true;
+}</span>
+
+void TshirtList::display()
+<span style = "background-color:#dfd">{
+	if (this-&gt;tshirts.size() == 0)
+		return;
+	Tshirt&amp; current = this-&gt;getCurrent();
+	current.display();
+}</span>
+
+void TshirtList::displayNext()
+<span style = "background-color:#dfd">{
+	if (this-&gt;tshirts.size() == 0)
+		return;
+	this-&gt;current++;
+	Tshirt&amp; currentTshirt = this-&gt;getCurrent();
+	currentTshirt.display();
+}</span>
+
+Tshirt &amp; TshirtList::getCurrent()
+<span style = "background-color:#dfd">{
+	if (this-&gt;current == this-&gt;tshirts.size())
+		this-&gt;current = 0;
+	return this-&gt;tshirts[this-&gt;current];
+}</span>
+
+TshirtList::TshirtList()
+<span style = "background-color:#dfd">{
+	this-&gt;current = 0;
+}</span>
+
+void TshirtList::clear()
+<span style = "background-color:#dfd">{
+	this-&gt;tshirts.clear();
+}</span></pre>
+	</body>
+</html>
