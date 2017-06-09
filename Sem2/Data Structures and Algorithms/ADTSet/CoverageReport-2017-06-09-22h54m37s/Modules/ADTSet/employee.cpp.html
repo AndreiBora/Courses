@@ -1,0 +1,64 @@
+<!doctype html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+	<head>
+        <meta charset="utf-8"/>
+	    <title>employee.cpp</title>
+	    <link href="../../third-party/google-code-prettify/prettify-CppCoverage.css" type="text/css" rel="stylesheet" />
+	    <script type="text/javascript" src="../../third-party/google-code-prettify/prettify.js"></script>
+	</head>
+	<body onload="prettyPrint()">
+        <h4></h4>
+		<pre class="prettyprint lang-cpp linenums">
+#include "Employee.h"
+#include &lt;sstream&gt;
+using namespace std;
+
+<span style = "background-color:#dfd">Employee::Employee(int _id, std::string _name, double _salary): id{_id},name{_name},salary{ _salary }
+{
+}</span>
+
+Employee::Employee()
+<span style = "background-color:#fdd">{
+	this-&gt;id = 0;
+	this-&gt;name = "";
+	this-&gt;salary = 0;
+}</span>
+
+
+Employee::~Employee()
+<span style = "background-color:#dfd">{
+}</span>
+
+
+bool Employee::operator&lt;(Employee &amp; e) const
+<span style = "background-color:#dfd">{
+	return this-&gt;id &lt; e.getId();
+}</span>
+
+bool Employee::operator&gt;(Employee &amp; e) const
+<span style = "background-color:#dfd">{
+	return this-&gt;id &gt; e.getId();
+}</span>
+
+std::string Employee::toString()
+<span style = "background-color:#fdd">{
+	std::stringstream ss;
+	ss &lt;&lt; "Employee: " &lt;&lt; this-&gt;id &lt;&lt; " name:" &lt;&lt; this-&gt;name &lt;&lt; " salary:" &lt;&lt; this-&gt;salary &lt;&lt; "\n";
+	return ss.str();
+}</span>
+
+
+void Employee::operator=(Employee e)
+<span style = "background-color:#fdd">{
+	this-&gt;id = e.getId();
+	this-&gt;name = e.getName();
+	this-&gt;salary = e.getSalary();
+}</span>
+
+std::ostream &amp; operator&lt;&lt;(std::ostream &amp; os, Employee &amp; e)
+<span style = "background-color:#fdd">{
+	os &lt;&lt; e.getId() &lt;&lt; "," &lt;&lt; e.getName() &lt;&lt; "," &lt;&lt; e.getSalary() &lt;&lt; "\n";
+	return os;
+}</span></pre>
+	</body>
+</html>

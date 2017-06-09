@@ -1,0 +1,36 @@
+<!doctype html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+	<head>
+        <meta charset="utf-8"/>
+	    <title>employee.h</title>
+	    <link href="../../third-party/google-code-prettify/prettify-CppCoverage.css" type="text/css" rel="stylesheet" />
+	    <script type="text/javascript" src="../../third-party/google-code-prettify/prettify.js"></script>
+	</head>
+	<body onload="prettyPrint()">
+        <h4></h4>
+		<pre class="prettyprint lang-cpp linenums">
+#pragma once
+#include &lt;string&gt;
+class Employee
+{
+private:
+	int id;
+	std::string name;
+	double salary;
+public:
+	Employee();
+	Employee(int _id, std::string _name, double _salary);
+<span style = "background-color:#dfd">	int getId() const { return id; }</span>
+<span style = "background-color:#fdd">	std::string getName() const { return name; }
+	double getSalary()const { return salary; }</span>
+	std::string toString();
+	bool operator&lt;(Employee&amp; e) const;
+	bool operator&gt;(Employee&amp; e) const;
+	void operator=(Employee e);
+	friend std::ostream&amp; operator &lt;&lt;(std::ostream&amp; os, Employee&amp; e);
+
+	~Employee();
+};
+</pre>
+	</body>
+</html>

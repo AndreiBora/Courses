@@ -1,0 +1,44 @@
+<!doctype html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+	<head>
+        <meta charset="utf-8"/>
+	    <title>employeevalidator.cpp</title>
+	    <link href="../../third-party/google-code-prettify/prettify-CppCoverage.css" type="text/css" rel="stylesheet" />
+	    <script type="text/javascript" src="../../third-party/google-code-prettify/prettify.js"></script>
+	</head>
+	<body onload="prettyPrint()">
+        <h4></h4>
+		<pre class="prettyprint lang-cpp linenums">
+#include "EmployeeValidator.h"
+
+using namespace std;
+<span style = "background-color:#fdd">EmployeeException::EmployeeException(std::vector&lt;std::string&gt; _errors):errors{_errors}
+{
+}</span>
+
+std::vector&lt;std::string&gt; EmployeeException::getErrors() const
+<span style = "background-color:#fdd">{
+	return this-&gt;errors;
+}</span>
+
+void EmployeeValidator::validate(const Employee &amp; e)
+<span style = "background-color:#fdd">{
+	vector&lt;string&gt; errors;
+	if (e.getName() == "") {
+		errors.push_back("The name cannot be empty\n");</span>
+	}
+<span style = "background-color:#fdd">	if (!isupper(e.getName()[0])) {
+		errors.push_back("Name must start with upper case\n");</span>
+	}
+<span style = "background-color:#fdd">	if (e.getId() &lt; 0) {
+		errors.push_back("Id cannot be negative\n");</span>
+	}
+<span style = "background-color:#fdd">	if (e.getSalary() &lt; 0) {
+		errors.push_back("Salary cannot be negative\n");</span>
+	}
+<span style = "background-color:#fdd">	if (errors.size()) {
+		throw EmployeeException(errors);</span>
+	}
+<span style = "background-color:#fdd">}</span></pre>
+	</body>
+</html>

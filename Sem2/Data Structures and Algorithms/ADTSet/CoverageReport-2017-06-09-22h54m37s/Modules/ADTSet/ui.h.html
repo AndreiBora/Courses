@@ -1,0 +1,35 @@
+<!doctype html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+	<head>
+        <meta charset="utf-8"/>
+	    <title>ui.h</title>
+	    <link href="../../third-party/google-code-prettify/prettify-CppCoverage.css" type="text/css" rel="stylesheet" />
+	    <script type="text/javascript" src="../../third-party/google-code-prettify/prettify.js"></script>
+	</head>
+	<body onload="prettyPrint()">
+        <h4></h4>
+		<pre class="prettyprint lang-cpp linenums">
+#pragma once
+#include "Controller.h"
+#include  "EmployeeValidator.h"
+
+class UI
+{
+private:
+	Controller ctrl;
+public:
+<span style = "background-color:#fdd">	UI(const Controller&amp; c) : ctrl{ c } {};</span>
+	void run();
+	~UI();
+private:
+	void addEmployeeUI();
+	void getNrEmployeesUI();
+	void findByIdUI();
+	void removeByIdUI();
+	void displayAllUI();
+
+	static void printMenu();
+};
+</pre>
+	</body>
+</html>

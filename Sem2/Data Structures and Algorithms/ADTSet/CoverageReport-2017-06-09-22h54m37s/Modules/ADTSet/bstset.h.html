@@ -1,0 +1,102 @@
+<!doctype html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+	<head>
+        <meta charset="utf-8"/>
+	    <title>bstset.h</title>
+	    <link href="../../third-party/google-code-prettify/prettify-CppCoverage.css" type="text/css" rel="stylesheet" />
+	    <script type="text/javascript" src="../../third-party/google-code-prettify/prettify.js"></script>
+	</head>
+	<body onload="prettyPrint()">
+        <h4></h4>
+		<pre class="prettyprint lang-cpp linenums">
+#pragma once
+#include "Set.h"
+#include &lt;stack&gt;
+#include &lt;memory&gt;
+
+class Iterator
+{
+public:
+	virtual void first() = 0;
+	virtual void next() = 0;
+	virtual Employee getCurrent() = 0;
+	virtual bool valid() = 0;
+};
+
+class Set
+{
+public:
+	virtual void add(Employee&amp; e) = 0;
+	virtual void remove(Employee&amp; e) = 0;
+	virtual bool find(Employee&amp; e) = 0;
+	virtual int size() = 0;
+	virtual void destroy() = 0;
+	virtual std::unique_ptr&lt;Iterator&gt; createIterator() = 0;
+<span style = "background-color:#fdd">	virtual ~Set() {};</span>
+};
+
+class Node
+{
+private:
+	Employee info;
+	Node* left;
+	Node* right;
+public:
+<span style = "background-color:#dfd">	Node(Employee employee, Node* l, Node* r) : info{ employee }, left{ l }, right{ right } {};
+	Employee getInfo() const { return info; }
+	Node* getLeft() const { return left; }
+	Node* getRight() const { return right; }</span>
+<span style = "background-color:#fdd">	void setInfo(Employee e) { this-&gt;info = e; }</span>
+<span style = "background-color:#dfd">	void setLeft(Node* n) { this-&gt;left = n; }
+	void setRight(Node* n) { this-&gt;right = n; }
+	~Node() {};</span>
+};
+
+
+class BSTSet: public Set
+{
+private:
+	Node *root;
+public:
+	BSTSet();
+	~BSTSet();
+	static BSTSet* init();
+	void add(Employee&amp; e) override;
+	void remove(Employee&amp; e)override;
+	bool find(Employee&amp; e) override;
+	int size()override;
+<span style = "background-color:#dfd">	Node* getRoot() { return this-&gt;root; }</span>
+	std::unique_ptr&lt;Iterator&gt; createIterator() override;
+	void destroy() override;
+private:
+	Node* addRec(Node*p,Employee&amp; e);
+	Node* findHelper(Node* p, Employee&amp; e);
+	Node* removeHelper(Node*p, Employee&amp; e);
+	Node* findSuccesor(Node*p);
+	int sizeHelper(Node*p);
+	void destroyHelper(Node* p);
+	void copyTree(Node* thisRoot, Node* sourceRoot);
+
+};
+
+
+
+
+class BSTSetIterator : public Iterator
+{
+private:
+	BSTSet&amp; set;
+	Node* current;
+	std::stack&lt;Node*&gt; stack;
+public:
+	BSTSetIterator(BSTSet&amp; s);
+	void first() override;
+	void next() override;
+	Employee getCurrent() override;
+	bool valid() override;
+private:
+	void goDownLeft();
+};
+</pre>
+	</body>
+</html>

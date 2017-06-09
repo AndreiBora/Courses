@@ -1,0 +1,65 @@
+<!doctype html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+	<head>
+        <meta charset="utf-8"/>
+	    <title>controller.cpp</title>
+	    <link href="../../third-party/google-code-prettify/prettify-CppCoverage.css" type="text/css" rel="stylesheet" />
+	    <script type="text/javascript" src="../../third-party/google-code-prettify/prettify.js"></script>
+	</head>
+	<body onload="prettyPrint()">
+        <h4></h4>
+		<pre class="prettyprint lang-cpp linenums">
+#include "Controller.h"
+
+
+
+void Controller::addEmployeeCtrl(int _id, std::string _name, double _salary)
+<span style = "background-color:#fdd">{
+	Employee e{ _id,_name,_salary };
+	this-&gt;validator.validate(e);
+	this-&gt;repo.addEmployee(e);
+}</span>
+
+
+int Controller::getNrEmployeesCtrl()
+<span style = "background-color:#fdd">{
+	return this-&gt;repo.getSize();
+}</span>
+
+
+Employee Controller::findByIdCtrl(int id)
+<span style = "background-color:#fdd">{
+	BSTSet employees = this-&gt;repo.getEmployees();
+	std::unique_ptr&lt;Iterator&gt;it = employees.createIterator();
+	while (!it-&gt;valid()) {
+		Employee e = it-&gt;getCurrent();
+		if (e.getId() == id) {
+			return e;</span>
+		}
+<span style = "background-color:#fdd">		it-&gt;next();
+	}
+	return Employee{};
+}</span>
+
+bool Controller::removeByIdCtrl(int id)
+<span style = "background-color:#fdd">{
+	BSTSet employees = this-&gt;repo.getEmployees();
+	Employee e{ id,"",0 };
+	if (!employees.find(e)) {
+		return false;</span>
+	}
+<span style = "background-color:#fdd">	this-&gt;repo.removeEmployee(e);
+	return true;
+}</span>
+
+BSTSet Controller::getEmplyeesCtrl()
+<span style = "background-color:#fdd">{
+	return this-&gt;repo.getEmployees();
+}</span>
+
+void Controller::writeToFileCtrl()
+<span style = "background-color:#fdd">{
+	this-&gt;repo.writeToFile();
+}</span></pre>
+	</body>
+</html>

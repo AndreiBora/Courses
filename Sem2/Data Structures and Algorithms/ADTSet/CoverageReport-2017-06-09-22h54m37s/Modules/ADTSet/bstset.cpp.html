@@ -1,0 +1,161 @@
+<!doctype html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+	<head>
+        <meta charset="utf-8"/>
+	    <title>bstset.cpp</title>
+	    <link href="../../third-party/google-code-prettify/prettify-CppCoverage.css" type="text/css" rel="stylesheet" />
+	    <script type="text/javascript" src="../../third-party/google-code-prettify/prettify.js"></script>
+	</head>
+	<body onload="prettyPrint()">
+        <h4></h4>
+		<pre class="prettyprint lang-cpp linenums">
+#include "BSTSet.h"
+#include &lt;memory&gt;
+
+BSTSet::BSTSet()
+<span style = "background-color:#dfd">{
+}</span>
+
+
+BSTSet::~BSTSet()
+<span style = "background-color:#fdd">{
+}</span>
+
+BSTSet * BSTSet::init()
+<span style = "background-color:#dfd">{
+	return new BSTSet();
+}</span>
+
+
+
+void BSTSet::add(Employee &amp; e)
+<span style = "background-color:#dfd">{
+	this-&gt;root = this-&gt;addRec(this-&gt;root, e);
+}</span>
+
+bool BSTSet::find(Employee &amp; e)
+<span style = "background-color:#dfd">{
+	if (this-&gt;findHelper(this-&gt;root, e) != nullptr) {
+		return true;</span>
+	}
+<span style = "background-color:#dfd">	return false;
+}</span>
+
+void BSTSet::remove(Employee &amp; e)
+<span style = "background-color:#dfd">{
+	this-&gt;root = this-&gt;removeHelper(this-&gt;root, e);
+}</span>
+
+int BSTSet::size()
+<span style = "background-color:#dfd">{
+	return this-&gt;sizeHelper(this-&gt;root);
+}</span>
+
+//-----------------------------------------
+
+Node * BSTSet::addRec(Node* p,Employee &amp; e)
+<span style = "background-color:#dfd">{
+	if (p == nullptr)
+		return new Node{ e,nullptr,nullptr };
+	if (e &lt; p-&gt;getInfo())
+		p-&gt;setLeft(this-&gt;addRec(p-&gt;getLeft(),e));
+	else if (e &gt; p-&gt;getInfo()) {
+		p-&gt;setRight(this-&gt;addRec(p-&gt;getRight(), e));</span>
+	}
+<span style = "background-color:#dfd">	return p;</span>
+
+<span style = "background-color:#dfd">}</span>
+
+Node * BSTSet::findHelper(Node * p, Employee &amp; e)
+<span style = "background-color:#dfd">{
+	if (p == nullptr) {
+		return nullptr;</span>
+	}
+<span style = "background-color:#dfd">	else if(e &lt; p-&gt;getInfo()) {
+		return findHelper(p-&gt;getLeft(), e);</span>
+	}
+<span style = "background-color:#dfd">	else if (e &gt; p-&gt;getInfo()) {
+		return findHelper(p-&gt;getRight(), e);</span>
+	}
+<span style = "background-color:#fdd">	else {</span>
+<span style = "background-color:#dfd">		return p;</span>
+	}
+<span style = "background-color:#dfd">}</span>
+
+Node * BSTSet::findSuccesor(Node * p)
+<span style = "background-color:#fdd">{
+	while (p-&gt;getLeft() != nullptr)
+		p = p-&gt;getLeft();
+	return p;
+}</span>
+
+Node * BSTSet::removeHelper(Node * p, Employee &amp; e)
+<span style = "background-color:#dfd">{
+	if (root == nullptr) {</span>
+<span style = "background-color:#fdd">		return root;</span>
+	}
+<span style = "background-color:#dfd">	else if (e &lt; p-&gt;getInfo()) {
+		p-&gt;setLeft(removeHelper(p-&gt;getLeft(), e));</span>
+	}
+<span style = "background-color:#dfd">	else if (e &gt; p-&gt;getInfo()) {
+		p-&gt;setRight(removeHelper(p-&gt;getRight(), e));</span>
+	}
+<span style = "background-color:#dfd">	else {</span>
+		//Case 1 No child
+<span style = "background-color:#dfd">		if (p-&gt;getLeft() == nullptr &amp;&amp; p-&gt;getRight() == nullptr) {
+			delete p;
+			p = nullptr;</span>
+		}
+		//Case 2:One child
+<span style = "background-color:#fdd">		else if (p-&gt;getLeft() == nullptr) {
+			Node* temp = p;
+			p = p-&gt;getRight();
+			delete temp;</span>
+		}
+<span style = "background-color:#fdd">		else if (p-&gt;getRight() == nullptr) {
+			Node* temp = p;
+			p = p-&gt;getLeft();
+			delete temp;</span>
+		}
+<span style = "background-color:#fdd">		else {
+			Node* temp = findSuccesor(p-&gt;getRight());
+			p-&gt;setInfo(temp-&gt;getInfo());
+			p-&gt;setRight(removeHelper(p-&gt;getRight(), temp-&gt;getInfo()));</span>
+		}
+	}
+<span style = "background-color:#dfd">	return p;
+}</span>
+
+int BSTSet::sizeHelper(Node * p)
+<span style = "background-color:#dfd">{
+	if (p == nullptr)
+		return 0;
+	int leftSize = sizeHelper(p-&gt;getLeft());
+	int rightSize = sizeHelper(p-&gt;getRight());
+	return leftSize + rightSize + 1;</span>
+
+<span style = "background-color:#dfd">}</span>
+
+std::unique_ptr&lt;Iterator&gt; BSTSet::createIterator()
+<span style = "background-color:#dfd">{
+	return std::make_unique&lt;BSTSetIterator&gt;(*this);
+}</span>
+
+void BSTSet::destroy()
+<span style = "background-color:#fdd">{
+	this-&gt;destroyHelper(this-&gt;root);
+}</span>
+
+void BSTSet::destroyHelper(Node * p)
+<span style = "background-color:#fdd">{
+	if (p != nullptr) {
+		destroyHelper(p-&gt;getLeft());
+		destroyHelper(p-&gt;getRight());
+		delete p;</span>
+	}
+<span style = "background-color:#fdd">}</span>
+
+
+</pre>
+	</body>
+</html>

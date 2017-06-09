@@ -1,0 +1,33 @@
+<!doctype html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+	<head>
+        <meta charset="utf-8"/>
+	    <title>controller.h</title>
+	    <link href="../../third-party/google-code-prettify/prettify-CppCoverage.css" type="text/css" rel="stylesheet" />
+	    <script type="text/javascript" src="../../third-party/google-code-prettify/prettify.js"></script>
+	</head>
+	<body onload="prettyPrint()">
+        <h4></h4>
+		<pre class="prettyprint lang-cpp linenums">
+#pragma once
+#include"Repository.h"
+#include "EmployeeValidator.h"
+
+class Controller
+{
+private:
+	Repository repo;
+	EmployeeValidator validator;
+public:
+<span style = "background-color:#fdd">	Controller(const Repository&amp; r, EmployeeValidator v): repo{r},validator{v}{}</span>
+	void addEmployeeCtrl(int _id, std::string _name,double _salary);
+	int getNrEmployeesCtrl();
+	Employee findByIdCtrl(int id);
+	bool removeByIdCtrl(int id);
+	Repository getRepo() { return repo; }
+	BSTSet getEmplyeesCtrl();
+	void writeToFileCtrl();
+};
+</pre>
+	</body>
+</html>

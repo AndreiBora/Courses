@@ -1,0 +1,83 @@
+<!doctype html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+	<head>
+        <meta charset="utf-8"/>
+	    <title>repository.cpp</title>
+	    <link href="../../third-party/google-code-prettify/prettify-CppCoverage.css" type="text/css" rel="stylesheet" />
+	    <script type="text/javascript" src="../../third-party/google-code-prettify/prettify.js"></script>
+	</head>
+	<body onload="prettyPrint()">
+        <h4></h4>
+		<pre class="prettyprint lang-cpp linenums">
+#include "Repository.h"
+
+#include &lt;string&gt;
+#include &lt;sstream&gt;
+#include &lt;fstream&gt;
+#include &lt;iostream&gt;
+using namespace std;
+
+Repository::Repository(const std::string &amp; filename)
+<span style = "background-color:#dfd">{
+	this-&gt;filename = filename;
+	this-&gt;readFromFile();</span>
+<span style = "background-color:#fdd">}</span>
+
+
+void Repository::addEmployee( Employee &amp; e)
+<span style = "background-color:#fdd">{
+	if (this-&gt;employees.find(e) == true) {
+		throw runtime_error("Duplicate employee ID");</span>
+	}
+<span style = "background-color:#fdd">	this-&gt;employees.add(e);
+}</span>
+
+void Repository::readFromFile()
+<span style = "background-color:#dfd">{
+	string line;
+	ifstream fin(filename);
+	if (!fin.is_open()) {
+		throw runtime_error("Cannot open the file");</span>
+	}
+<span style = "background-color:#fdd">	else {
+		while (getline(fin, line)) {
+			stringstream streamLine(line);
+			vector&lt;string&gt; tokens;
+			string word;
+			while (getline(streamLine, word, ',')) {
+				tokens.push_back(word);
+			}
+			Employee e{ stoi(tokens[0]),tokens[1],stod(tokens[2]) };
+			this-&gt;employees.add(e);
+		}</span>
+	}
+<span style = "background-color:#fdd">}</span>
+
+void Repository::writeToFile()
+<span style = "background-color:#fdd">{
+	ofstream fout(this-&gt;filename);
+	if (!fout.is_open()) {
+		throw runtime_error("The file could not be opened!");</span>
+	}
+<span style = "background-color:#fdd">	std::unique_ptr&lt;Iterator&gt;it =  employees.createIterator();
+	while (!it-&gt;valid()) {
+		Employee e = it-&gt;getCurrent();
+		fout &lt;&lt; e;
+		it-&gt;next();
+	}
+	fout.close();
+}</span>
+
+
+int Repository::getSize()
+<span style = "background-color:#fdd">{
+	return this-&gt;employees.size();
+}</span>
+
+void Repository::removeEmployee(Employee &amp; e)
+<span style = "background-color:#fdd">{
+	this-&gt;employees.remove(e);
+}</span>
+</pre>
+	</body>
+</html>

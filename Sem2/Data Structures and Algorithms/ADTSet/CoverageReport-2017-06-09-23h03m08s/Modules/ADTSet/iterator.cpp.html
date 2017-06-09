@@ -1,0 +1,60 @@
+<!doctype html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+	<head>
+        <meta charset="utf-8"/>
+	    <title>iterator.cpp</title>
+	    <link href="../../third-party/google-code-prettify/prettify-CppCoverage.css" type="text/css" rel="stylesheet" />
+	    <script type="text/javascript" src="../../third-party/google-code-prettify/prettify.js"></script>
+	</head>
+	<body onload="prettyPrint()">
+        <h4></h4>
+		<pre class="prettyprint lang-cpp linenums">
+#include "Iterator.h"
+
+
+
+<span style = "background-color:#dfd">BSTSetIterator::BSTSetIterator(BSTSet &amp; s): set{s}
+{
+	this-&gt;current = this-&gt;set.getRoot();
+	this-&gt;goDownLeft();
+}</span>
+
+void BSTSetIterator::first()
+<span style = "background-color:#dfd">{
+	while (!stack.empty())</span>
+<span style = "background-color:#fdd">		stack.pop();</span>
+<span style = "background-color:#dfd">	this-&gt;current = this-&gt;set.getRoot();
+	this-&gt;goDownLeft();
+}</span>
+
+void BSTSetIterator::next()
+<span style = "background-color:#dfd">{
+	this-&gt;goDownLeft();
+}</span>
+
+Employee BSTSetIterator::getCurrent()
+<span style = "background-color:#dfd">{
+	if (!this-&gt;stack.empty()) {
+		this-&gt;current = this-&gt;stack.top();
+		this-&gt;stack.pop();</span>
+	}
+<span style = "background-color:#dfd">	Employee e = this-&gt;current-&gt;getInfo();
+	this-&gt;current = this-&gt;current-&gt;getRight();
+	return e;
+}</span>
+
+bool BSTSetIterator::valid()
+<span style = "background-color:#dfd">{
+	return this-&gt;stack.empty();
+}</span>
+
+void BSTSetIterator::goDownLeft()
+<span style = "background-color:#dfd">{
+	while (this-&gt;current != nullptr)</span>
+	{
+<span style = "background-color:#dfd">		stack.push(this-&gt;current);
+		this-&gt;current = this-&gt;current-&gt;getLeft();
+	}
+}</span></pre>
+	</body>
+</html>

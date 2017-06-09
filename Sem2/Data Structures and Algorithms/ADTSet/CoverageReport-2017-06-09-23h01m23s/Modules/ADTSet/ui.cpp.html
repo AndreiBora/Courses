@@ -1,0 +1,152 @@
+<!doctype html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+	<head>
+        <meta charset="utf-8"/>
+	    <title>ui.cpp</title>
+	    <link href="../../third-party/google-code-prettify/prettify-CppCoverage.css" type="text/css" rel="stylesheet" />
+	    <script type="text/javascript" src="../../third-party/google-code-prettify/prettify.js"></script>
+	</head>
+	<body onload="prettyPrint()">
+        <h4></h4>
+		<pre class="prettyprint lang-cpp linenums">
+#include "UI.h"
+#include &lt;string&gt;
+#include &lt;iostream&gt;
+
+using namespace std;
+
+
+void UI::printMenu()
+<span style = "background-color:#fdd">{
+	cout &lt;&lt; "Possible commands: " &lt;&lt; endl;
+	cout &lt;&lt; "\t 1 - Add an employee." &lt;&lt; endl;
+	cout &lt;&lt; "\t 2 - Get number of employees" &lt;&lt; endl;
+	cout &lt;&lt; "\t 3 - Find employee by Id" &lt;&lt; endl;
+	cout &lt;&lt; "\t 4 - Remove by Id" &lt;&lt; endl;
+	cout &lt;&lt; "\t 5 - Display all." &lt;&lt; endl;
+	cout &lt;&lt; "\t 0 - Exit." &lt;&lt; endl;</span>
+	
+<span style = "background-color:#fdd">}</span>
+
+void UI::addEmployeeUI()
+<span style = "background-color:#fdd">{</span>
+	int id;
+<span style = "background-color:#fdd">	string name;</span>
+	double salary;
+<span style = "background-color:#fdd">	cout &lt;&lt; "Enter the id of the employee" &lt;&lt; endl;
+	cin &gt;&gt; id;
+	cin.ignore();
+	cout &lt;&lt; "Enter the name of the employee" &lt;&lt; endl;
+	getline(cin, name);
+	cout &lt;&lt; "Enter the salary of the employee" &lt;&lt; endl;
+	cin &gt;&gt; salary;
+	cin.ignore();
+	try {
+		this-&gt;ctrl.addEmployeeCtrl(id, name, salary);
+	}</span>
+	catch (EmployeeException&amp; e) {
+<span style = "background-color:#fdd">		for (auto emp : e.getErrors())
+			cout &lt;&lt; emp;
+	}</span>
+	catch (exception&amp; e) {
+<span style = "background-color:#fdd">		cout &lt;&lt; e.what() &lt;&lt; endl;
+	}
+}</span>
+
+void UI::getNrEmployeesUI()
+<span style = "background-color:#fdd">{</span>
+	int nr;
+<span style = "background-color:#fdd">	nr = this-&gt;ctrl.getNrEmployeesCtrl();
+	cout &lt;&lt; "Total number of employees in the company is :" &lt;&lt; nr &lt;&lt; endl;
+}</span>
+
+void UI::findByIdUI()
+<span style = "background-color:#fdd">{</span>
+	int id;
+<span style = "background-color:#fdd">	cout &lt;&lt; "Enter the ID: ";
+	cin &gt;&gt; id;
+	Employee e =  this-&gt;ctrl.findByIdCtrl(id);
+	if (e.getName() == "") {
+		cout &lt;&lt; "The employee was not fount" &lt;&lt; endl;</span>
+	}
+<span style = "background-color:#fdd">	else {
+		cout &lt;&lt; e.toString() &lt;&lt; endl;</span>
+	}
+<span style = "background-color:#fdd">}</span>
+
+void UI::removeByIdUI()
+<span style = "background-color:#fdd">{</span>
+	int id;
+<span style = "background-color:#fdd">	cout &lt;&lt; "Enter the id: ";
+	cin &gt;&gt; id;
+	bool flag = this-&gt;ctrl.removeByIdCtrl(id);
+	if (flag) {
+		cout &lt;&lt; "The Employee was removed" &lt;&lt; endl;</span>
+	}
+<span style = "background-color:#fdd">	else {
+		cout &lt;&lt; "The employee was not found" &lt;&lt; endl;</span>
+	}
+<span style = "background-color:#fdd">}</span>
+
+void UI::displayAllUI()
+<span style = "background-color:#fdd">{
+	BSTSet employees = this-&gt;ctrl.getEmplyeesCtrl();
+	auto it = employees.createIterator();
+	while (!it-&gt;valid()) {
+		Employee e = it-&gt;getCurrent();
+		cout &lt;&lt; e.toString();
+		it-&gt;next();
+	}
+}</span>
+
+
+void UI::run()
+<span style = "background-color:#fdd">{
+	while (true) {
+		UI::printMenu();
+		int command{ 0 };
+		cout &lt;&lt; "Input the command: ";
+		cin &gt;&gt; command;
+		cin.ignore();
+		if (command == 0) {
+			this-&gt;ctrl.writeToFileCtrl();
+			break;</span>
+		}
+<span style = "background-color:#fdd">		switch (command)</span>
+		{
+		case 1:
+		{
+<span style = "background-color:#fdd">			this-&gt;addEmployeeUI();
+			break;</span>
+		}
+		case 2:
+		{
+<span style = "background-color:#fdd">			this-&gt;getNrEmployeesUI();
+			break;</span>
+		}
+		case 3:
+		{
+<span style = "background-color:#fdd">			this-&gt;findByIdUI();
+			break;</span>
+		}
+		case 4:
+		{
+<span style = "background-color:#fdd">			this-&gt;removeByIdUI();
+			break;</span>
+		}
+		case 5:
+		{
+<span style = "background-color:#fdd">			this-&gt;displayAllUI();</span>
+			break;
+		}
+
+		} 
+<span style = "background-color:#fdd">	}
+}</span>
+
+
+UI::~UI()
+<span style = "background-color:#fdd">{
+}</span></pre>
+	</body>
+</html>

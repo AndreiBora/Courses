@@ -1,0 +1,8 @@
+7,Pique,10000
+8,Neymar,12000
+9,Suarez,8000
+10,Messi,14000
+11,Zidane,15000
+5,Ronaldo,1
+6,Frank,1002
+4,McGregor,10000
